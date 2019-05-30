@@ -295,6 +295,13 @@ module.exports = function(webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        {
+          test: /\.worker\.js$/,
+          use: {
+            loader: 'worker-loader',
+            options: { inline: true }
+          }
+        },
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
 
@@ -308,7 +315,7 @@ module.exports = function(webpackEnv) {
               options: {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                
+
               },
               loader: require.resolve('eslint-loader'),
             },
@@ -341,7 +348,7 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -380,7 +387,7 @@ module.exports = function(webpackEnv) {
                 ],
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
-                
+
                 // If an error happens in a package, it's possible to be
                 // because it was compiled. Thus, we don't want the browser
                 // debugger to show the original code. Instead, the code
@@ -523,7 +530,7 @@ module.exports = function(webpackEnv) {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (currently CSS only):
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
